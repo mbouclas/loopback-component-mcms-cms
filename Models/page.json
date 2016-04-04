@@ -1,0 +1,86 @@
+{
+  "name": "Page",
+  "plural": "pages",
+  "base": "PersistedModel",
+  "dataSource": "mongodb",
+  "public": true,
+  "settings" : {
+    "mongodb": {
+      "allowExtendedOperators": true
+    }
+  },
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "mixins": {
+    "Paginate": {
+      "limit": "10"
+    },
+    "Timestamp": {}
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "permalink": {
+      "type": "string",
+      "index": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "description_long": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "date"
+    },
+    "updated_at": {
+      "type": "date"
+    },
+    "uid": {
+      "type": "object"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "pageCategoryIds": {
+      "type": [
+        "object"
+      ],
+      "index": true
+    },
+    "settings": {
+      "type": "object"
+    },
+    "thumb": {
+      "type": "object"
+    },
+    "images": {
+      "type": [
+        "object"
+      ]
+    },
+    "relatedIds": {
+      "type": [
+        "object"
+      ]
+    }
+  },
+  "validations": [],
+  "relations": {
+    "Categories": {
+      "type": "referencesMany",
+      "model": "PageCategory",
+      "property": "pageCategoryIds",
+      "options": {
+        "validate": false,
+        "forceId": false
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

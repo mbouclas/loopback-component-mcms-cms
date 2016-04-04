@@ -1,0 +1,34 @@
+{
+  "name": "loopback-component-mcms-cms",
+  "version": "0.0.1",
+  "description": "CMS component for Loopback based Mcms",
+  "main": "index.js",
+  "keywords": [
+    "loopback",
+    "MCMS",
+    "CMS",
+    "component"
+  ],
+  "author": "Michael Bouclas <mbouclas@gmail.com> (http://net-tomorrow.com/)",
+  "license": "MIT",
+  "scripts": {
+    "watch": "watchify ./admin/cms/index.js -o ./admin/cms-compiled.js -v",
+    "minify": "uglifyjs ./admin/cms-compiled.js --compress --mangle -o ./admin/cms-compiled.min.js"
+  },
+  "homepage": "https://github.com/mbouclas/loopback-component-mcms-cms",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mbouclas/loopback-component-mcms-cms.git"
+  },
+  "dependencies": {
+    "async": "^1.5.2",
+    "bluebird": "^3.3.4",
+    "fs-extra": "^0.26.7",
+    "lodash": "^4.7.0",
+    "moment": "^2.12.0",
+    "pagination": "^0.4.4",
+    "slug": "^0.9.1",
+    "sprintf": "^0.1.5",
+    "wrench": "^1.5.9"
+  }
+}

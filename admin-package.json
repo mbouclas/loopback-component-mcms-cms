@@ -1,0 +1,15 @@
+{
+  "name" : "mcms-node-cms",
+  "package" : "mcms-node-cms",
+  "modules" : [
+    "mcms.cms"
+  ],
+  "files" : {
+    "js" : [
+      "cms-compiled.js"
+    ],
+    "css" : [
+      "css/style.css"
+    ]
+  }
+}
