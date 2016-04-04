@@ -1,0 +1,77 @@
+<div>
+<md-content layout="column" flex="flex" ng-click="toggleSearch=false">
+  <md-table headers="headers" content="content" sortable="sortable" filters="search" custom-class="custom"
+            thumbs="thumbs" count="count"></md-table>
+</md-content>
+<div layout="" layout-xs="column">
+  <div flex="70" flex-xs="100">
+    <md-content layout-gt-sm="row">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Title</label>
+        <input ng-model="VM.Page.title" required to-slug="VM.Page.permalink">
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Permalink</label>
+        <input ng-model="VM.Page.permalink" required>
+      </md-input-container>
+    </md-content>
+
+
+    <md-autocomplete
+      md-select-on-focus="true"
+      md-no-cache="false"
+      md-delay="500"
+      md-search-text="VM.searchText"
+      md-selected-item-change="VM.onCategorySelected(item)"
+      md-items="item in VM.getCategories(VM.searchText)"
+      md-item-text="item.category"
+      md-min-length="0"
+      placeholder="Select category">
+      <md-item-template>
+        <span md-highlight-text="VM.searchText" md-highlight-flags="^i">{{item.category}}</span>
+      </md-item-template>
+      <md-not-found>
+        Nothing found
+      </md-not-found>
+    </md-autocomplete>
+
+    <md-chips ng-model="VM.Page.categories" readonly="true">
+      <md-chip-template>
+        <strong>{{$chip.category}}</strong>
+        <md-icon class="material-icons" ng-click="VM.removeCategory($chip)">close</md-icon>
+      </md-chip-template>
+
+    </md-chips>
+    <md-input-container class="md-block">
+      <label>Description</label>
+      <textarea ng-model="VM.Page.description" placeholder="Description" redactor="{{ redactorConfig }}"></textarea>
+    </md-input-container>
+
+    <md-input-container class="md-block">
+      <label>Long description</label>
+      <textarea ng-model="VM.Page.description_long" placeholder="Long description" redactor="{{ redactorConfig }}"></textarea>
+    </md-input-container>
+  </div>
+  <div flex="30" flex-xs="100" layout-padding="">
+    <md-switch ng-model="VM.Page.active" aria-label="Active">
+      Status
+    </md-switch>
+    <md-content layout-gt-sm="row">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>SKU</label>
+        <input ng-model="VM.Page.sku">
+      </md-input-container>
+    </md-content>
+    <md-content layout-gt-sm="row" class="img-responsive">
+      <thumb-upload-box id="pageThumb"
+                        ng-model="VM.Page.thumb"
+                        options="VM.thumbUploadOptions"
+                        thumb="VM.Page.thumb.copies.big_thumb.imageUrl"
+      ></thumb-upload-box>
+    </md-content>
+  </div>
+
+
+</div>
+
+</div>

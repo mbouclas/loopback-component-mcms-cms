@@ -1,0 +1,35 @@
+<upload-box
+  ng-model="VM.Page.images" config="VM.imagesUploadOptions"
+  ng-if="VM.Page.id" callback="VM.onImagesUploadDone(file,response)"
+  auto-start="true" progress-bar="true" multiple="true"
+  accept-select="{{ VM.imagesUploadOptions.acceptSelect }}"
+  accept="{{ VM.imagesUploadOptions.accept }}"></upload-box>
+
+<md-table-container>
+  <table md-table md-row-select ng-model="VM.selected">
+    <thead md-head>
+    <tr md-row>
+      <th></th>
+      <th md-column><span></span></th>
+      <th md-column><span>Alt</span></th>
+      <th md-column><span>Title</span></th>
+      <th md-column md-numeric>Active</th>
+
+
+    </tr>
+    </thead>
+    <tbody md-body sv-root sv-part="VM.Page.images" class="sortable-container">
+    <tr md-row md-select="item" md-select-id="{{item.id}}"
+        md-auto-select ng-repeat="item in VM.Page.images" sv-element="opts">
+      <td md-cell><md-icon class="material-icons md-primary" sv-handle>drag_handle</md-icon></td>
+      <td md-cell><img ng-src="{{item.copies.thumb.imageUrl}}" /></td>
+      <td md-cell><input ng-model="item.alt"></td>
+      <td md-cell><input ng-model="item.title"></td>
+      <td md-cell>
+        <md-switch ng-model="data.cb1" aria-label="Switch 1">
+        {{ item.active }}
+      </md-switch></td>
+    </tr>
+    </tbody>
+  </table>
+</md-table-container>

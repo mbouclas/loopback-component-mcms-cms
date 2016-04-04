@@ -18,10 +18,10 @@ module.exports = (function(App,Package,privateMethods){
     // console.log(JSON.stringify(loopbackQuery))
     // console.log(JSON.stringify(aggregationsQuery))
     var asyncTasks = {
-        products : fetchProducts.bind(null,loopbackQuery)
+        pages : fetchPages.bind(null,loopbackQuery)
       },
       Category = {},
-      Collection = App.models.Product.getDataSource().connector.collection(App.models.Product.modelName);
+      Collection = App.models.Page.getDataSource().connector.collection(App.models.Page.modelName);
 
     if (options.aggregations){
       var aggregationsToRun = runAggregations(options.aggregations);
@@ -33,9 +33,9 @@ module.exports = (function(App,Package,privateMethods){
     async.parallel(asyncTasks,callback);
 
 
-    function fetchProducts(query,next) {
+    function fetchPages(query,next) {
 
-      App.Services['mcmsNodeEshop'].Product.find(query, lo.merge({relatedSkus: true},options), next);
+      App.Services['mcmsNodeCMS'].Page.find(query, lo.merge({relatedSkus: true},options), next);
     }
 
     function runAggregations(requestedAggregations) {

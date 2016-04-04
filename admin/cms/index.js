@@ -2,7 +2,8 @@
   'use strict';
 
   angular.module('mcms.cms', [
-    'mcms.cms.config'
+    'mcms.cms.config',
+    'mcms.cms.pages'
   ])
     .run(run);
 
@@ -10,14 +11,14 @@
 
   function run(App,Menu) {
     App.registerModule('registering cms module');
-    var eshopMenu = Menu.newItem({
+    var pagesMenu = Menu.newItem({
       id : 'products',
       title : 'Manage CMS',
       permalink : 'cms'
     });
 
 
-/*    eshopMenu
+/*    pagesMenu
       .addChildren([
         {
           id : 'productCategories',
@@ -35,11 +36,12 @@
           permalink : 'products/settings'
         }
       ]);*/
-    Menu.addMenu(eshopMenu);
+    Menu.addMenu(pagesMenu);
   }
 
 })();
 
 require('./Config');
 require('./routes');
+require('./Page');
 

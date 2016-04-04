@@ -1,0 +1,19 @@
+<md-card>
+  <md-card-title><h4>Latest Pages</h4></md-card-title>
+  <md-card-content>
+    <md-list flex>
+      <md-list-item class="md-2-line" ng-repeat="item in VM.items">
+        <div class="md-list-item-text">
+          <h3><a href="{{ 'page' | url:{id : item.id} }}">{{ item.title }}</a></h3>
+          <p>{{ item.created_at | moment }}</p>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+
+      </md-list-item>
+    </md-list>
+  </md-card-content>
+  <md-card-actions layout="row" layout-align="end center">
+    <md-button href="{{ 'pages-home' | url }}?filters={{ {newImport : true} | urlEncode }}">View all</md-button>
+  </md-card-actions>
+</md-card>
+

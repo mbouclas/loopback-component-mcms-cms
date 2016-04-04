@@ -1,0 +1,25 @@
+<md-content layout-padding="">
+  <h2>{{ VM.Product.title }}</h2>
+  <form>
+    <md-tabs md-dynamic-height="" md-border-bottom="">
+      <md-tab label="{{ tab.label }}" ng-repeat="tab in VM.tabs" md-active="tab.active"
+              md-on-select="VM.onTabChange(tab.alias)">
+        <md-content class="md-padding">
+          <ng-include src="tab.file"></ng-include>
+        </md-content>
+      </md-tab>
+
+
+    </md-tabs>
+
+
+    <section layout="column">
+      <md-button class="md-raised md-primary md-hue-2" ng-click="VM.save()">
+        <md-icon class="material-icons">save</md-icon>
+        Save
+      </md-button>
+    </section>
+
+
+  </form>
+</md-content>

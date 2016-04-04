@@ -2,7 +2,7 @@ module.exports = function(Model) {
   var App = require(require.main.filename);//either server or commander
 
   Model.search = function (q,cb) {
-    App.Services.mcmsNodeEshop.Search.get({keyword: q}, function (err, results) {
+    App.Services.mcmsNodeCMS.Search.get({keyword: q}, function (err, results) {
 
       cb(null, results);
     });
@@ -20,7 +20,7 @@ module.exports = function(Model) {
 
   Model.findAll = function (req,res,cb) {
 
-    App.Controllers['mcmsNodeEshop']['Cms/Page'].find(req,res,cb);
+    App.Controllers['mcmsNodeCMS']['Cms/Page'].find(req,res,cb);
   };
 
   Model.remoteMethod(
@@ -37,7 +37,7 @@ module.exports = function(Model) {
   );
 
   Model.getOne = function (req,res,cb) {
-    App.Controllers['mcmsNodeEshop']['Cms/Page'].findOne(req,res,cb);
+    App.Controllers['mcmsNodeCMS']['Cms/Page'].findOne(req,res,cb);
   };
 
   Model.remoteMethod(
@@ -54,7 +54,7 @@ module.exports = function(Model) {
   );
 
   Model.saveItem = function (req,res,cb) {
-    App.Controllers['mcmsNodeEshop']['Cms/Page'].save(req,res,cb);
+    App.Controllers['mcmsNodeCMS']['Cms/Page'].save(req,res,cb);
   };
 
   Model.remoteMethod(

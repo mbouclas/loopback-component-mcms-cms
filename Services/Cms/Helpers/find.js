@@ -15,7 +15,7 @@ module.exports = (function(App,Package,privateMethods){
 
     var queryDefaults = {
       limit : 10,
-      order : 'eshop.price ASC',
+      order : 'created_at DESC',
       skip : 0,
       fields : {},
       where : {}
@@ -23,7 +23,7 @@ module.exports = (function(App,Package,privateMethods){
 
     var Query = App.Helpers.loopback.setUpFilters(query,queryDefaults);
 
-    App.models.Product.paginate(Query)
+    App.models.Page.paginate(Query)
       .then(function (docs) {
         var items = [];
 
@@ -48,7 +48,7 @@ module.exports = (function(App,Package,privateMethods){
             q.include = ['ExtraFields','Categories'];
           }
 
-          return App.models.Product.find(q).then(function (related) {
+          return App.models.Page.find(q).then(function (related) {
             //we have a bunch of related docs. We need to sort them out based on the baseSku
             //group items by sku
             var groupedItems = groupItemsBySku(related);
@@ -71,7 +71,7 @@ module.exports = (function(App,Package,privateMethods){
       .catch(function (err) {
         callback(err);
       });
-/*    App.models.Product.find({
+/*    App.models.Page.find({
         where : {
           productCategoryIds : { inq : ["55355ae0d35cb3c46fa5229e"] },
           active : true,

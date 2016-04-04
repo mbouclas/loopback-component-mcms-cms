@@ -2,35 +2,16 @@ module.exports = (function (App, Package) {
   var lo = require('lodash');
   //format an item for public use
   return function (item,options) {
-    App.Helpers.eshop.applyTaxAndDiscountToProduct(item);
+    var categories = [],
+      images = [];
 
-    var extraFields = [],
-      categories = [],
-      images = [],
-      eshop = {
-        intPrice : item.eshop.price,
-        price : App.Helpers.eshop.intPriceToFloat(item.eshop.price)
-      };
-
-    //map fields with values
-    lo.forEach(item.ExtraFields(),function (field) {
-      var found = lo.find(item.extraFieldValues,{id : field.id.toString()});
-      if (!found){
-        return;
+      if (!item.thumb){
+          item.thumb = {};
       }
 
-      extraFields.push({
-        value : found.value,
-        title : field.title,
-        permalink : field.permalink,
-        varName : field.varName,
-        type : field.type,
-        fieldOptions : field.fieldOptions,
-        settings : field.settings,
-        id : field.id
-      });
-
-    });
+      if (!item.images){
+          item.images = [];
+      }
 
     //map categories
     lo.forEach(item.Categories(),function (category) {
@@ -52,8 +33,6 @@ module.exports = (function (App, Package) {
       copies : setupImage(item.thumb.copies)
     };
 
-
-
     if (lo.isArray(item.images) && item.images.length > 0){
       for (var i in item.images){
         images.push({
@@ -72,26 +51,20 @@ module.exports = (function (App, Package) {
       description : item.description,
       description_long : item.description_long,
       categories : categories,
-      extraFields : extraFields,
       settings : item.settings,
-      eshop : eshop,
       thumb : thumb,
       images : item.images,
       related : item.related,
-      upselling : item.upselling,
-      productOptions : item.productOptions,
       id : item.id
     };
 
     if (options && options.returnType == 'full'){
       toReturn.created_at = item.created_at;
       toReturn.updated_at = item.updated_at;
-      toReturn.productCategoryIds = item.productCategoryIds;
-      toReturn.extraFieldIds = item.extraFieldIds;
+      toReturn.pageCategoryIds = item.productCategoryIds;
       toReturn.uid = item.uid;
       toReturn.active = item.active;
       toReturn.thumb = item.thumb;
-      toReturn.eshop = lo.merge(item.eshop,eshop);
     }
 
     return toReturn;

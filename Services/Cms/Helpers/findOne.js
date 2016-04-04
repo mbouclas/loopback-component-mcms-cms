@@ -15,7 +15,7 @@ module.exports = (function (App, Package, privateMethods) {
         options = {};
     }
 
-    Model = App.models.Product;
+    Model = App.models.Page;
     var Query = App.Helpers.loopback.setUpFilters(query);
 
     var asyncTasks = [
@@ -31,7 +31,7 @@ module.exports = (function (App, Package, privateMethods) {
     function fetch(next) {
       Model.findOne(Query).then(function (doc) {
         if (!doc){
-          next('Product.findOne.ProductNotFound');
+          next('Page.findOne.PageNotFound');
         }
         next(null,privateMethods.formatItem(doc,options));
       })
@@ -43,10 +43,10 @@ module.exports = (function (App, Package, privateMethods) {
     function fetchRelatedSkus(model, next) {
       var q = {where: {active: true, baseSku: model.baseSku}};
       if (options.relatedSkus == 'full') {
-        q.include = ['ExtraFields', 'Categories'];
+        q.include = ['Categories'];
       }
 
-      App.models.Product.find(q)
+      App.models.Page.find(q)
         .then(function (related) {
           var items = [];
           for (var i in related){

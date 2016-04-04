@@ -20,20 +20,20 @@ module.exports = (function (App, Package) {
      return next();
      }*/
 
-    App.Services['mcmsNodeEshop'].Product.findOne({
+    App.Services['mcmsNodeCMS'].Page.findOne({
       where: {id: req.query.id},
-      include: ['ExtraFields', 'Categories']
-    }, {relatedSkus: true, returnType: 'full'}, function (err, product) {
+      include: [ 'Categories']
+    }, {returnType: 'full'}, function (err, page) {
       if (err) {
         App.Log.error(err);
         return res.render('Errors/500.nunj');
       }
 
-      if (!product) {
+      if (!page) {
         return res.render('Errors/404.nunj');
       }
 
-      res.send(product);
+      res.send(page);
     });
   }
 
@@ -74,9 +74,9 @@ module.exports = (function (App, Package) {
     }
 
     asyncTasks.push(lookUpFilters);
-    asyncTasks.push(fetchProducts);
+    asyncTasks.push(fetchPages);
 
-    async.waterfall(asyncTasks, function (err, products) {
+    async.waterfall(asyncTasks, function (err, pages) {
       //handle errors
       if (err) {
         App.Log.error(err);
@@ -87,19 +87,19 @@ module.exports = (function (App, Package) {
         prelink: '/',
         current: page,
         rowsPerPage: filters.limit,//this is set in the function lookUpFilters
-        totalResult: products.products.counters.itemsTotal
+        totalResult: pages.pages.counters.itemsTotal
       }).getPaginationData();
       paging.limit = filters.limit;
 
       next(null, {
-        Products: products.products.items, counters: products.products.counters
+        Pages: pages.pages.items, counters: pages.pages.counters
         , Category: Category, Pagination: paging
       });
     });
 
     function findCategoryByPermalink(next) {
       //Handle no category found
-      App.models.ProductCategory.findOne({where: {permalink: categoryToLookFor}}, function (err, category) {
+      App.models.PageCategory.findOne({where: {permalink: categoryToLookFor}}, function (err, category) {
         if (err) {
           App.Log.error(err);
           return res.render('Errors/500.nunj');
@@ -203,13 +203,13 @@ module.exports = (function (App, Package) {
       next(null, filters);
     }
 
-    function fetchProducts(filters, next) {
+    function fetchPages(filters, next) {
       if (Category.id) {
         filters.where.category = Category.id;
       }
       filters.include = ['Categories'];
 
-      App.Services['mcmsNodeEshop'].Product.filter(filters, {aggregations: [], returnType: 'full'})
+      App.Services['mcmsNodeCMS'].Page.filter(filters, {aggregations: [], returnType: 'full'})
         .then(function (results) {
           results.category = Category;
           next(null, results);
@@ -227,31 +227,31 @@ module.exports = (function (App, Package) {
      return next();
      }*/
 
-    App.Services['mcmsNodeEshop'].Product.findOne({
+    App.Services['mcmsNodeCMS'].Page.findOne({
       where: {id: req.params.id},
       include: []
-    }, {relatedSkus: true}, function (err, product) {
+    }, {relatedSkus: true}, function (err, page) {
       if (err) {
         App.Log.error(err);
         return res.send({error: err}).status(500);
       }
 
-      if (!product) {
+      if (!page) {
         return res.send({error: 'not found'}).status(404);
       }
 
-      res.send(product);
+      res.send(page);
     });
   }
 
   function search(req, res, next) {
     //search via a term or other filters
-    //searches in products - categories - extra fields?
+    //searches in pages - categories - extra fields?
 
   }
 
   function save(req, res, next) {
-    App.Services['mcmsNodeEshop'].Product.save(req.body.item)
+    App.Services['mcmsNodeCMS'].Page.save(req.body.item)
       .then(function (result) {
         return next(null, result);
       });
